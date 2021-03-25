@@ -1,0 +1,32 @@
+﻿<body>
+    <div>hello</div>
+    <button onclick="findComputerInfo()">获取电脑信息</button>
+    <button onclick="findDiv()">获取电脑信息</button>
+    <ul id="msg"></ul>
+</body>
+<script type="text/javascript">
+    (async function () {
+        await CefSharp.BindObjectAsync("googleBrower");
+
+        await googleBrower.init();
+
+
+        setTimeout("changeState()", 1000);
+    })();
+  
+
+    function changeState() {
+        (async function () {
+            await CefSharp.BindObjectAsync("googleBrower");
+
+            let recvString = await googleBrower.recvData();
+            console.log('-' + recvString+ '-');
+            if (recvString.trim() == '11') {
+                console.log('ok');
+                await googleBrower.send_data('22');
+            }
+
+            setTimeout("changeState()", 1000);
+        })();       
+    }  
+</script>
