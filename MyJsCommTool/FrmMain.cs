@@ -30,6 +30,8 @@ namespace MyJsCommTool
 
         public ChromiumWebBrowser chromeBrowser;
 
+        public List<string> pathList = new List<string>();
+
         //初始化浏览器并启动
         public void InitializeChromium()
         {
@@ -44,14 +46,40 @@ namespace MyJsCommTool
             // Initialize cef with the provided settings
             Cef.Initialize(settings);
 
+            //string url = Application.StartupPath + "\\myHtml\\tcpClient1.html";
+            // Create a browser component
+            //chromeBrowser = new ChromiumWebBrowser(pathList[tscbxJsList.SelectedIndex]);
+            chromeBrowser = new ChromiumWebBrowser();
+            // Add it to the form and fill it to the form window.
+            this.panel1.Controls.Add(chromeBrowser);
+            chromeBrowser.Dock = DockStyle.Fill;
 
+            //chromeBrowser.RegisterAsyncJsObject("googleBrower", new ScriptCallbackManager(), new CefSharp.BindingOptions { CamelCaseJavascriptNames = false });
+            //chromeBrowser.RegisterJsObject("googleBrower", new ScriptCallbackManager(), true, BindingOptions.DefaultBinder);   //带false 可以识别大写字母开头的函数或变量
+            // this.mychrome.RegisterJsObject("JsObj", new CallbackObjectForJs());  //不带 false  不能识别大写字母开头的函数或变量
+
+            //For async object registration (equivalent to the old RegisterAsyncJsObject)
+            chromeBrowser.JavascriptObjectRepository.Register("serialPortHelper", new SerialPortHelper(), true, BindingOptions.DefaultBinder);
+            chromeBrowser.JavascriptObjectRepository.Register("tcpClientHelper", new TcpClientHelper(), true, BindingOptions.DefaultBinder);
         }
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
             try
             {
-                tsbtnOpen.PerformClick();
+                DirectoryInfo folder = new DirectoryInfo(Application.StartupPath + "\\myHtml\\");
+
+                foreach (FileInfo file in folder.GetFiles("*.html"))
+                {
+                    Debug.WriteLine(file.Name);
+                    tscbxJsList.Items.Add(file.Name);
+                    pathList.Add(file.FullName);
+                }
+
+                if (tscbxJsList.Items.Count > 0)
+                    tscbxJsList.SelectedIndex = 0;
+
+                //tsbtnOpen.PerformClick();
             }
             catch (Exception ex)
             {
@@ -76,20 +104,7 @@ namespace MyJsCommTool
 
         private void tsbtnOpen_Click(object sender, EventArgs e)
         {
-            string url = Application.StartupPath + "\\myHtml\\tcpClient1.html";
-            // Create a browser component
-            chromeBrowser = new ChromiumWebBrowser(url);
-            // Add it to the form and fill it to the form window.
-            this.panel1.Controls.Add(chromeBrowser);
-            chromeBrowser.Dock = DockStyle.Fill;
-
-            //chromeBrowser.RegisterAsyncJsObject("googleBrower", new ScriptCallbackManager(), new CefSharp.BindingOptions { CamelCaseJavascriptNames = false });
-            //chromeBrowser.RegisterJsObject("googleBrower", new ScriptCallbackManager(), true, BindingOptions.DefaultBinder);   //带false 可以识别大写字母开头的函数或变量
-            // this.mychrome.RegisterJsObject("JsObj", new CallbackObjectForJs());  //不带 false  不能识别大写字母开头的函数或变量
-
-            //For async object registration (equivalent to the old RegisterAsyncJsObject)
-            chromeBrowser.JavascriptObjectRepository.Register("serialPortHelper", new SerialPortHelper(), true, BindingOptions.DefaultBinder);
-            chromeBrowser.JavascriptObjectRepository.Register("tcpClientHelper", new TcpClientHelper(), true, BindingOptions.DefaultBinder);
+            chromeBrowser.Load(pathList[tscbxJsList.SelectedIndex]);
         }
 
         private void tsmiOpenDevTools_Click(object sender, EventArgs e)
