@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MyJsCommTool
 {
-    class ScriptCallbackManager
+    class SerialPortHelper
     {
         public System.IO.Ports.SerialPort com = new System.IO.Ports.SerialPort();
 
@@ -40,23 +40,6 @@ namespace MyJsCommTool
         /// </summary>
         public int Parity = (int)System.IO.Ports.Parity.None;
 
-        /// <summary>
-        /// 查找电脑信息
-        /// </summary> IJavascriptCallback javascriptCallback
-        /// <param name="javascriptCallback"></param>
-        public string FindComputerInfo()
-        {
-            return JsonConvert.SerializeObject(new
-            {
-                cpu_id = "1",
-                disk_id = "2",
-                host_name = "联想",
-                networkcard = "是的",
-                serialNumber = "12233",
-                manufacturer = "hello",
-                product = "联想",
-            });
-        }
 
         public void init()
         {

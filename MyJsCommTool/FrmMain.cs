@@ -56,7 +56,7 @@ namespace MyJsCommTool
             // this.mychrome.RegisterJsObject("JsObj", new CallbackObjectForJs());  //不带 false  不能识别大写字母开头的函数或变量
 
             //For async object registration (equivalent to the old RegisterAsyncJsObject)
-            chromeBrowser.JavascriptObjectRepository.Register("googleBrower", new ScriptCallbackManager(), true, BindingOptions.DefaultBinder);
+            chromeBrowser.JavascriptObjectRepository.Register("serialPortHelper", new SerialPortHelper(), true, BindingOptions.DefaultBinder);
         }
 
         private void FrmMain_Load(object sender, EventArgs e)

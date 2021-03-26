@@ -6,9 +6,9 @@
 </body>
 <script type="text/javascript">
     (async function () {
-        await CefSharp.BindObjectAsync("googleBrower");
+        await CefSharp.BindObjectAsync("serialPortHelper");
 
-        await googleBrower.init();
+        await serialPortHelper.init();
 
 
         setTimeout("changeState()", 1000);
@@ -17,13 +17,13 @@
 
     function changeState() {
         (async function () {
-            await CefSharp.BindObjectAsync("googleBrower");
+            await CefSharp.BindObjectAsync("serialPortHelper");
 
-            let recvString = await googleBrower.recvData();
+            let recvString = await serialPortHelper.recvData();
             console.log('-' + recvString+ '-');
             if (recvString.trim() == '11') {
                 console.log('ok');
-                await googleBrower.send_data('22');
+                await serialPortHelper.send_data('22');
             }
 
             setTimeout("changeState()", 1000);
