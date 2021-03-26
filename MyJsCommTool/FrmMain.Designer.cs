@@ -29,17 +29,9 @@ namespace MyJsCommTool
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel2 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
-            // panel2
-            // 
-            this.panel2.Location = new System.Drawing.Point(611, 175);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(552, 328);
-            this.panel2.TabIndex = 6;
             // 
             // panel1
             // 
@@ -53,7 +45,7 @@ namespace MyJsCommTool
             this.textBox1.Location = new System.Drawing.Point(12, 146);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(537, 342);
+            this.textBox1.Size = new System.Drawing.Size(552, 342);
             this.textBox1.TabIndex = 7;
             // 
             // FrmMain
@@ -62,7 +54,6 @@ namespace MyJsCommTool
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1184, 753);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "FrmMain";
             this.Text = "脚本调试工具";
@@ -74,8 +65,6 @@ namespace MyJsCommTool
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox textBox1;
     }

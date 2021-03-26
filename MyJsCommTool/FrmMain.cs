@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,8 @@ namespace MyJsCommTool
         {
             InitializeComponent();
 
+
+
             // Start the browser after initialize global component
             InitializeChromium();
         }
@@ -31,6 +34,13 @@ namespace MyJsCommTool
         public void InitializeChromium()
         {
             CefSettings settings = new CefSettings();
+            settings.Locale = "zh-CN";
+            settings.CefCommandLineArgs.Add("disable-gpu", "1");
+            settings.CachePath = Directory.GetCurrentDirectory() + @"\cache";
+            settings.LogSeverity = LogSeverity.Info;
+            //settings.LogFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log.txt");
+            settings.LogFile = Path.Combine(Directory.GetCurrentDirectory() + @"\log", "log.txt");
+            
             // Initialize cef with the provided settings
             Cef.Initialize(settings);
 
@@ -65,6 +75,7 @@ namespace MyJsCommTool
             TextBoxTraceListener tbtl = new TextBoxTraceListener(this.textBox1);
             Debug.Listeners.Add(tbtl);
             Trace.Listeners.Add(tbtl);
+            
             Debug.WriteLine("Testing Testing 123");
         }
 
