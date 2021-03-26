@@ -6,7 +6,7 @@
 </body>
 <script type="text/javascript">
     (async function () {
-        await CefSharp.BindObjectAsync("googleBrower");
+        await CefSharp.BindObjectAsync("serialPortHelper");
 
         //The default is to camel case method names (the first letter of the method name is changed to lowercase)
         googleBrower.div(16, 2).then(function (actualResult) {
