@@ -44,7 +44,39 @@ namespace MyJsCommTool
             // Initialize cef with the provided settings
             Cef.Initialize(settings);
 
-            string url = Application.StartupPath + "\\myHtml\\test2.html";
+
+        }
+
+        private void FrmMain_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                tsbtnOpen.PerformClick();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //窗体关闭时，记得停止浏览器
+            Cef.Shutdown();
+        }
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            TextBoxTraceListener tbtl = new TextBoxTraceListener(this.rtbxLog);
+            Debug.Listeners.Add(tbtl);
+            //Trace.Listeners.Add(tbtl);
+            
+            //Debug.WriteLine("Testing Testing 123");
+        }
+
+        private void tsbtnOpen_Click(object sender, EventArgs e)
+        {
+            string url = Application.StartupPath + "\\myHtml\\tcpClient1.html";
             // Create a browser component
             chromeBrowser = new ChromiumWebBrowser(url);
             // Add it to the form and fill it to the form window.
@@ -57,28 +89,20 @@ namespace MyJsCommTool
 
             //For async object registration (equivalent to the old RegisterAsyncJsObject)
             chromeBrowser.JavascriptObjectRepository.Register("serialPortHelper", new SerialPortHelper(), true, BindingOptions.DefaultBinder);
+            chromeBrowser.JavascriptObjectRepository.Register("tcpClientHelper", new TcpClientHelper(), true, BindingOptions.DefaultBinder);
         }
 
-        private void FrmMain_Load(object sender, EventArgs e)
+        private void tsmiOpenDevTools_Click(object sender, EventArgs e)
         {
+            //CefWindowInfo windowInfo;
+            var host = chromeBrowser.GetBrowserHost();
+
+            var windowInfo = new WindowInfo();
+            windowInfo.SetAsPopup(host.GetWindowHandle(), "DevTools");
+            //windowInfo.SetAsPopup(this.panel2.Handle, "DevTools");
+            //windowInfo.SetAsChild(this.panel2.Handle);
+            chromeBrowser.ShowDevTools(windowInfo); // Opens Chrome Developer tools window
 
         }
-
-        private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            //窗体关闭时，记得停止浏览器
-            Cef.Shutdown();
-        }
-
-        protected override void OnHandleCreated(EventArgs e)
-        {
-            TextBoxTraceListener tbtl = new TextBoxTraceListener(this.textBox1);
-            Debug.Listeners.Add(tbtl);
-            Trace.Listeners.Add(tbtl);
-            
-            Debug.WriteLine("Testing Testing 123");
-        }
-
-
     }
 }

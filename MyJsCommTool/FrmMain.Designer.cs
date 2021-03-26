@@ -31,7 +31,6 @@ namespace MyJsCommTool
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -40,6 +39,10 @@ namespace MyJsCommTool
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.rtbxLog = new System.Windows.Forms.RichTextBox();
+            this.tscbxJsList = new System.Windows.Forms.ToolStripComboBox();
+            this.tsbtnOpen = new System.Windows.Forms.ToolStripButton();
+            this.tsmiOpenDevTools = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -56,15 +59,6 @@ namespace MyJsCommTool
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(792, 305);
             this.panel1.TabIndex = 5;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(0, 0);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(792, 330);
-            this.textBox1.TabIndex = 7;
             // 
             // statusStrip1
             // 
@@ -89,7 +83,9 @@ namespace MyJsCommTool
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1});
+            this.toolStripButton1,
+            this.tscbxJsList,
+            this.tsbtnOpen});
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(792, 25);
@@ -99,6 +95,7 @@ namespace MyJsCommTool
             // 设置ToolStripMenuItem
             // 
             this.设置ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiOpenDevTools,
             this.tsmiConfig});
             this.设置ToolStripMenuItem.Name = "设置ToolStripMenuItem";
             this.设置ToolStripMenuItem.Size = new System.Drawing.Size(59, 21);
@@ -112,12 +109,11 @@ namespace MyJsCommTool
             // 
             // toolStripButton1
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(52, 22);
+            this.toolStripButton1.Text = "刷新";
             // 
             // splitContainer1
             // 
@@ -132,7 +128,7 @@ namespace MyJsCommTool
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.textBox1);
+            this.splitContainer1.Panel2.Controls.Add(this.rtbxLog);
             this.splitContainer1.Size = new System.Drawing.Size(792, 639);
             this.splitContainer1.SplitterDistance = 305;
             this.splitContainer1.TabIndex = 11;
@@ -143,6 +139,37 @@ namespace MyJsCommTool
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(131, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
+            // rtbxLog
+            // 
+            this.rtbxLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbxLog.Location = new System.Drawing.Point(0, 0);
+            this.rtbxLog.Name = "rtbxLog";
+            this.rtbxLog.Size = new System.Drawing.Size(792, 330);
+            this.rtbxLog.TabIndex = 0;
+            this.rtbxLog.Text = "";
+            // 
+            // tscbxJsList
+            // 
+            this.tscbxJsList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.tscbxJsList.Name = "tscbxJsList";
+            this.tscbxJsList.Size = new System.Drawing.Size(121, 25);
+            // 
+            // tsbtnOpen
+            // 
+            this.tsbtnOpen.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnOpen.Image")));
+            this.tsbtnOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnOpen.Name = "tsbtnOpen";
+            this.tsbtnOpen.Size = new System.Drawing.Size(52, 22);
+            this.tsbtnOpen.Text = "打开";
+            this.tsbtnOpen.Click += new System.EventHandler(this.tsbtnOpen_Click);
+            // 
+            // tsmiOpenDevTools
+            // 
+            this.tsmiOpenDevTools.Name = "tsmiOpenDevTools";
+            this.tsmiOpenDevTools.Size = new System.Drawing.Size(180, 22);
+            this.tsmiOpenDevTools.Text = "打开devTools";
+            this.tsmiOpenDevTools.Click += new System.EventHandler(this.tsmiOpenDevTools_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -152,9 +179,10 @@ namespace MyJsCommTool
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FrmMain";
-            this.Text = "脚本调试工具";
+            this.Text = "通讯工具[串口TCP，自己写html，想怎么发怎么发]";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.statusStrip1.ResumeLayout(false);
@@ -165,7 +193,6 @@ namespace MyJsCommTool
             this.toolStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -175,7 +202,6 @@ namespace MyJsCommTool
 
         #endregion
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStrip toolStrip1;
@@ -184,5 +210,9 @@ namespace MyJsCommTool
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.RichTextBox rtbxLog;
+        private System.Windows.Forms.ToolStripComboBox tscbxJsList;
+        private System.Windows.Forms.ToolStripButton tsbtnOpen;
+        private System.Windows.Forms.ToolStripMenuItem tsmiOpenDevTools;
     }
 }

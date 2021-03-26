@@ -10,9 +10,9 @@ namespace MyJsCommTool
 {
     class TextBoxTraceListener : TraceListener
     {
-        private TextBox tBox;
+        private RichTextBox tBox;
 
-        public TextBoxTraceListener(TextBox box)
+        public TextBoxTraceListener(RichTextBox box)
         {
             this.tBox = box;
         }
@@ -22,7 +22,9 @@ namespace MyJsCommTool
             //allows tBox to be updated from different thread
             tBox.Parent.Invoke(new MethodInvoker(delegate ()
             {
-                tBox.AppendText(msg);
+                tBox.AppendText($"{DateTime.Now:yyyy-MM-dd HH:mm:ss}    {msg}");
+                tBox.SelectionStart = tBox.Text.Length;
+                tBox.ScrollToCaret();
             }));
         }
 

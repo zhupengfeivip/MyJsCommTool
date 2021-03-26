@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace MyJsCommTool
 {
+    /// <summary>
+    /// 
+    /// </summary>
     class SerialPortHelper
     {
         public System.IO.Ports.SerialPort com = new System.IO.Ports.SerialPort();
@@ -54,7 +57,7 @@ namespace MyJsCommTool
 
         public string recvData()
         {
-            Debug.WriteLine($"recvData successfully.");
+            //Debug.WriteLine($"recvData successfully.");
 
             Thread.Sleep(50);  //（毫秒）等待一定时间，确保数据的完整性 int len        
             int len = com.BytesToRead;
@@ -79,7 +82,7 @@ namespace MyJsCommTool
         public int div(int dividend, int divisor)
         {
             Thread.Sleep(1000 * 2);
-            Debug.WriteLine($"{DateTime.Now.ToString()} Object was bound successfully.");
+            Debug.WriteLine($"{DateTime.Now} Object was bound successfully.");
             return dividend / divisor;
         }
 

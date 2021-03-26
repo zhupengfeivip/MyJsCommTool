@@ -1,0 +1,68 @@
+﻿<body>
+    <div>tcp测试客户端</div><br />
+    <input type="text" id="txtServer" value="127.0.0.1" /><br />
+    <input type="text" id="txtPort" value="60000" /><br />
+    <button onclick="conn()">连接</button>
+    <button onclick="close()">断开</button>
+    <button onclick="sendData()">发送</button>
+    <button onclick="recvData()">接收</button>
+</body>
+<script type="text/javascript">
+    (async function () {
+        await CefSharp.BindObjectAsync("tcpClientHelper");
+        
+    })();
+
+
+    function conn() {
+        (async function () {
+            await CefSharp.BindObjectAsync("tcpClientHelper");
+            var server = document.getElementById("txtServer").value;
+            var port = document.getElementById("txtPort").value;
+            console.log(server, port);
+            await tcpClientHelper.conn(server, parseInt(port));
+
+            //建立连接后发登录
+            await tcpClientHelper.sendData("383635333734303530363031353933");
+
+            setTimeout("recvData()", 1000);
+        })();
+    }
+
+    function close() {
+        (async function () {
+            await CefSharp.BindObjectAsync("tcpClientHelper");
+
+            await tcpClientHelper.close();
+        })();
+    }
+
+    function sendData() {
+        (async function () {
+            await CefSharp.BindObjectAsync("tcpClientHelper");
+
+            await tcpClientHelper.sendData("313233");
+
+            console.log('sendData');
+        })();
+    }
+
+    function recvData() {
+        (async function () {
+            await CefSharp.BindObjectAsync("tcpClientHelper");
+
+            let recvString = await tcpClientHelper.recvData();
+            console.log('[' + recvString+ ']');
+            if (recvString.trim() == '680100010068FFFFFFFFFFFF010100CE16') {
+                console.log('ok 31');
+                await tcpClientHelper.sendData('68 03 00 03 00 68 FF FF FF FF FF FF 81 01 00 01 AA BB B8 16');
+            }
+            else if (recvString.trim() == '680100010068FFFFFFFFFFFF020000552316') {
+                console.log('ok 32');
+                await tcpClientHelper.sendData('68 01 00 01 00 68 FF FF FF FF FF FF 82 01 00 FF 4E 16');
+            }
+
+            setTimeout("recvData()", 1000);
+        })();       
+    }  
+</script>

@@ -40,6 +40,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>comm.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bonn.Helper, Version=1.1.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Bonn.Helper.1.1.0.3\lib\net45\Bonn.Helper.dll</HintPath>
@@ -77,6 +80,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SerialPortHelper.cs" />
+    <Compile Include="TcpClientHelper.cs" />
     <Compile Include="TextBoxTraceListener.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -89,10 +93,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="comm.ico" />
+    <Content Include="myHtml\tcpClient1.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="myHtml\test.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="myHtml\test2.html">
+    <Content Include="myHtml\serialPort1.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
