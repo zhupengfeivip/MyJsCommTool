@@ -151,6 +151,8 @@ namespace MyJsCommTool
                 string fileName = pathList[tscbxJsList.SelectedIndex];
 
                 File.WriteAllText(fileName, textEditorControl1.Text);
+
+                Debug.WriteLine($"[{fileName}]已保存");
             }
             catch (Exception ex)
             {
@@ -164,6 +166,8 @@ namespace MyJsCommTool
             {
                 string fileName = pathList[tscbxJsList.SelectedIndex];
                 chromeBrowser.Load(fileName);
+
+                Debug.WriteLine($"[{fileName}]已刷新");
             }
             catch (Exception ex)
             {
