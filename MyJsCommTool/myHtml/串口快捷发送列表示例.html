@@ -1,21 +1,45 @@
 ﻿<body>
     <div>串口测试</div>
-    <input type="text" id="txtPort" value="COM2" /><br />
-    波特率:<input type="text" id="txtBaudRate" value="57600" />
-    数据位:<input type="text" id="txtDataBits" value="8" />
-    停止位:<input type="text" id="txtStopBits" value="1" />
-    校验位:<input type="text" id="txtParity" value="0" />
+    <input type="text" id="txtPort" style="width:50px;" value="COM2" />
+    波特率:<input type="text" style="width:50px;" id="txtBaudRate" value="57600" />
+    数据位:<input type="text" style="width:50px;" id="txtDataBits" value="8" />
+    停止位:<input type="text" style="width:50px;" id="txtStopBits" value="1" />
+    校验位:<input type="text" style="width:50px;" id="txtParity" value="0" />
+    <ul id="ulCmdList" style="list-style-type: none;">
+        <li></li>
+    </ul>
     <button onclick="testOpen()">open</button>
     <button onclick="testClose()">close</button>
     <button onclick="sendData()">发送</button>
     <button onclick="recvData()">接收</button>
     <button onclick="startCyclicRecvData()">循环接收</button>
     <button onclick="stopCyclicRecvData()">取消循环接收</button>
+    <button onclick="sendCmdList2()">发列表135项</button>
 </body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/art-template/4.13.2/lib/template-web.min.js"></script>
+<script id="tpl-cmdList" type="text/html">
+    <% for(var i = 0; i < cmdList.length; i++){ %>
+    <li>  <%= i %>  <input type="text" style="width:500px;" readonly="readonly" value="<%= cmdList[i].cmdText %>" /><button onclick="sendCmdList(<%= i %>)"><%= cmdList[i].cmdName %></button></li>
+    <% } %>
+</script>
 <script type="text/javascript">
 
     var cyclicTimeId;
+    var data = {
+        cmdList: [
+            { "id": 0, "cmdText": "00", cmdName: "在代码中改名称", hex: true,  },
+            { "id": 1, "cmdText": "11", cmdName: "cmd2", hex: true , },
+            { "id": 2, "cmdText": "22", cmdName: "cmd3", hex: true , },
+            { "id": 3, "cmdText": "33", cmdName: "cmd4", hex: true , },
+        ]
+    };
+
     (async function () {
+        var html = template("tpl-cmdList", data);
+        console.log(html);
+        document.getElementById('ulCmdList').innerHTML = html;
+
         await CefSharp.BindObjectAsync("serialPortHelper");
 
         var portName = document.getElementById("txtPort").value;
@@ -26,7 +50,6 @@
         await serialPortHelper.init(portName, baudRate, dataBits, stopBits, parity);
 
 
-        //setTimeout("changeState()", 1000);
     })();
 
     function testOpen() {
@@ -47,6 +70,31 @@
             await serialPortHelper.close();
         })();
     }
+
+    function sendCmdList(index) {
+        (async function () {
+            await CefSharp.BindObjectAsync("serialPortHelper");
+
+            await serialPortHelper.sendData(data.cmdList[index].cmdText);
+        })();
+    }
+
+    function sendCmdList2() {
+        (async function () {
+            await CefSharp.BindObjectAsync("serialPortHelper");
+            await CefSharp.BindObjectAsync("systemHelper");
+
+            //按此顺序发送命令，修改顺序修改此数组即可
+            var sendIndex = [2, 0, 1];
+            for (var i = 0; i < sendIndex.length; i++) {
+                var index = sendIndex[i];
+
+                await systemHelper.sleep(1000);
+                await serialPortHelper.sendData(data.cmdList[index].cmdText);
+            }
+        })();
+    }
+
 
     function sendData() {
         (async function () {

@@ -62,6 +62,7 @@ namespace MyJsCommTool
             //For async object registration (equivalent to the old RegisterAsyncJsObject)
             chromeBrowser.JavascriptObjectRepository.Register("serialPortHelper", new SerialPortHelper(), true, BindingOptions.DefaultBinder);
             chromeBrowser.JavascriptObjectRepository.Register("tcpClientHelper", new TcpClientHelper(), true, BindingOptions.DefaultBinder);
+            chromeBrowser.JavascriptObjectRepository.Register("systemHelper", new SystemHelper(), true, BindingOptions.DefaultBinder);
         }
 
         private void FrmMain_Load(object sender, EventArgs e)

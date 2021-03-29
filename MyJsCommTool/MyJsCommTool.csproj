@@ -94,6 +94,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SerialPortHelper.cs" />
+    <Compile Include="SystemHelper.cs" />
     <Compile Include="TcpClientHelper.cs" />
     <Compile Include="TextBoxTraceListener.cs" />
   </ItemGroup>
@@ -396,13 +397,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="highlighting\TextEditorControl.bmp" />
-    <Content Include="myHtml\tcpClient1.html">
+    <Content Include="myHtml\串口快捷发送列表示例.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="myHtml\test.html">
+    <Content Include="myHtml\TCP客户端示例.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="myHtml\serialPort1.html">
+    <Content Include="myHtml\串口通讯示例.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\Reading_16x16.png" />
