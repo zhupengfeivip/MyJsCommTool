@@ -1,29 +1,78 @@
 ﻿<body>
     <div>串口测试</div>
+    <input type="text" id="txtPort" value="COM2" /><br />
+    波特率:<input type="text" id="txtBaudRate" value="57600" />
+    数据位:<input type="text" id="txtDataBits" value="8" />
+    停止位:<input type="text" id="txtStopBits" value="1" />
+    校验位:<input type="text" id="txtParity" value="0" />
+    <button onclick="testOpen()">open</button>
+    <button onclick="testClose()">close</button>
+    <button onclick="sendData()">发送</button>
+    <button onclick="recvData()">接收</button>
 </body>
 <script type="text/javascript">
     (async function () {
         await CefSharp.BindObjectAsync("serialPortHelper");
 
-        await serialPortHelper.init();
+        var portName = document.getElementById("txtPort").value;
+        var baudRate = parseInt(document.getElementById("txtBaudRate").value);
+        var dataBits = parseInt(document.getElementById("txtDataBits").value);
+        var stopBits = parseInt(document.getElementById("txtStopBits").value);
+        var parity = parseInt(document.getElementById("txtParity").value);
+        await serialPortHelper.init(portName, baudRate, dataBits, stopBits, parity);
 
 
         //setTimeout("changeState()", 1000);
     })();
-  
+
+    function testOpen() {
+        return (async function () {
+            console.log('open');
+
+            await CefSharp.BindObjectAsync("serialPortHelper");
+
+            await serialPortHelper.open();
+        })();
+    }
+
+    function testClose() {
+        console.log('close');
+        (async function () {
+            await CefSharp.BindObjectAsync("serialPortHelper");
+
+            await serialPortHelper.close();
+        })();
+    }
+
+    function sendData() {
+        (async function () {
+            await CefSharp.BindObjectAsync("serialPortHelper");
+
+            await serialPortHelper.sendData("313233");
+        })();
+    }
+
+    function recvData() {
+        (async function () {
+            await CefSharp.BindObjectAsync("serialPortHelper");
+
+            let recvString = await serialPortHelper.recvData();
+            console.log('[' + recvString + ']');
+        })();
+    }
 
     function changeState() {
         (async function () {
             await CefSharp.BindObjectAsync("serialPortHelper");
 
             let recvString = await serialPortHelper.recvData();
-            console.log('-' + recvString+ '-');
+            console.log('-' + recvString + '-');
             if (recvString.trim() == '11') {
                 console.log('ok');
                 await serialPortHelper.send_data('22');
             }
 
             setTimeout("changeState()", 1000);
-        })();       
-    }  
+        })();
+    }
 </script>
