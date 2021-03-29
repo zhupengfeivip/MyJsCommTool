@@ -9,8 +9,12 @@
     <button onclick="testClose()">close</button>
     <button onclick="sendData()">发送</button>
     <button onclick="recvData()">接收</button>
+    <button onclick="startCyclicRecvData()">循环接收</button>
+    <button onclick="stopCyclicRecvData()">取消循环接收</button>
 </body>
 <script type="text/javascript">
+
+    var cyclicTimeId;
     (async function () {
         await CefSharp.BindObjectAsync("serialPortHelper");
 
@@ -61,7 +65,15 @@
         })();
     }
 
-    function changeState() {
+    function startCyclicRecvData() {
+        cyclicRecvData();
+    }
+
+    function stopCyclicRecvData() {
+        clearTimeout(cyclicTimeId);
+    }
+
+    function cyclicRecvData() {
         (async function () {
             await CefSharp.BindObjectAsync("serialPortHelper");
 
@@ -69,10 +81,12 @@
             console.log('-' + recvString + '-');
             if (recvString.trim() == '11') {
                 console.log('ok');
-                await serialPortHelper.send_data('22');
+                await serialPortHelper.sendData('22');
             }
 
-            setTimeout("changeState()", 1000);
+            cyclicTimeId = setTimeout("cyclicRecvData()", 1000);
         })();
     }
+
+
 </script>
