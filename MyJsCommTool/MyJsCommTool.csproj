@@ -397,6 +397,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="highlighting\TextEditorControl.bmp" />
+    <Content Include="myHtml\串口ASCII示例.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="myHtml\串口参数示例.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="myHtml\串口快捷发送列表示例.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

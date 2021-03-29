@@ -47,7 +47,8 @@ namespace MyJsCommTool
         /// 
         /// </summary>
         /// <param name="strData"></param>
-        public void sendData(string strData)
+        /// <param name="type">发送的数据类型 1为HEX,2为string</param>
+        public void sendData(string strData, int type = 1)
         {
             Debug.WriteLine($"sendData：{strData}");
 
@@ -55,15 +56,18 @@ namespace MyJsCommTool
             bw = new BinaryWriter(clientStream);
 
             //去掉所有的空格，再转换为字节
-            byte[] data = strData.Replace(" ","").HexStringToByte();
-            bw.Write(data);
+            byte[] data = strData.Replace(" ","").HexStringToByte();        
+            if (type == 1)
+                bw.Write(data);
+            else
+                bw.Write(strData.Replace(" ", ""));
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public string recvData()
+        public string recvData(int type = 1)
         {
             System.Threading.Thread.Sleep(200);
             if (client.Available <= 0) return "";
@@ -75,7 +79,11 @@ namespace MyJsCommTool
             int length = client.Client.Receive(buff);
             byte[] recvBuff = new byte[length];
             Buffer.BlockCopy(buff, 0, recvBuff, 0, recvBuff.Length);
-            string receive = recvBuff.ByteToString();
+            string receive;
+            if (type == 1)
+                receive = recvBuff.ByteToHexString();
+            else
+                receive = recvBuff.ToStringByAscii();
             Debug.WriteLine($"recvData：{receive}");
 
             return receive;

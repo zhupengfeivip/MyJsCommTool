@@ -18,32 +18,6 @@ namespace MyJsCommTool
     {
         public System.IO.Ports.SerialPort com = new System.IO.Ports.SerialPort();
 
-        ///// <summary>
-        ///// 天平通讯串口
-        ///// </summary>
-        //public string PortName = "COM3";
-
-        ///// <summary>
-        ///// 波特率
-        ///// </summary>
-        //public int BaudRate = 57600;
-
-        ///// <summary>
-        ///// 数据位
-        ///// </summary>
-        //public int DataBits = 8;
-
-        ///// <summary>
-        ///// 停止位
-        ///// </summary>
-        //public int StopBits = (int)System.IO.Ports.StopBits.One;
-
-        ///// <summary>
-        ///// 校验位
-        ///// </summary>
-        //public int Parity = (int)System.IO.Ports.Parity.None;
-
-
         /// <summary>
         /// 
         /// </summary>
@@ -93,14 +67,14 @@ namespace MyJsCommTool
             {
                 Debug.WriteLine($"Close串口时发生异常," + ex);
             }
-          
+
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public string recvData()
+        public string recvData(int type = 1)
         {
             //Debug.WriteLine($"recvData successfully.");
 
@@ -111,25 +85,35 @@ namespace MyJsCommTool
             byte[] buff = new byte[len];
             com.Read(buff, 0, len);
 
-            Debug.WriteLine($"recvData successfully. {buff.ByteToHexString()}");
+            string receive;
+            if (type == 1)
+                receive = buff.ByteToHexString();
+            else
+                receive = buff.ToStringByAscii();
 
-            return buff.ByteToHexString();
+            Debug.WriteLine($"recvData：{receive}");
+
+            return receive;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="data"></param>
-        public void sendData(string data)
+        /// <param name="type">发送的数据类型 1为HEX,2为string</param>
+        public void sendData(string data, int type = 1)
         {
-            if(com.IsOpen == false)
+            if (com.IsOpen == false)
             {
                 Debug.WriteLine($"串口未打开");
                 return;
             }
 
             byte[] sendBytes = data.Replace(" ", "").ToBytes();
-            com.Write(sendBytes, 0, sendBytes.Length);
+            if (type == 1)
+                com.Write(sendBytes, 0, sendBytes.Length);
+            else
+                com.Write(data.Replace(" ", ""));
 
             Debug.WriteLine($"send_data {data}");
         }
