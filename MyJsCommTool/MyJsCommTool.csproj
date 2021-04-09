@@ -409,6 +409,9 @@
     <Content Include="myHtml\TCP客户端示例.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="myHtml\串口通讯示例2.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="myHtml\串口通讯示例.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

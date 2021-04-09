@@ -50,8 +50,6 @@
         var stopBits = parseInt(document.getElementById("txtStopBits").value);
         var parity = parseInt(document.getElementById("txtParity").value);
         await serialPortHelper.init(portName, baudRate, dataBits, stopBits, parity);
-
-
     })();
 
     function testOpen() {

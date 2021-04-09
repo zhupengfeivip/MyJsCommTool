@@ -1,0 +1,158 @@
+﻿<body>
+    <div>串口测试</div>
+    <input type="text" id="txtPort" value="COM2" /><br />
+    波特率:<input type="text" id="txtBaudRate" value="57600" />
+    数据位:<input type="text" id="txtDataBits" value="8" />
+    停止位:<input type="text" id="txtStopBits" value="1" />
+    校验位:<input type="text" id="txtParity" value="0" />
+    <button onclick="testOpen()">open</button>
+    <button onclick="testClose()">close</button>
+    <button onclick="sendData()">发送11</button>
+    <button onclick="recvData()">接收</button>
+    <button onclick="startCyclicRecvData()">循环接收</button>
+    <button onclick="stopCyclicRecvData()">取消循环接收</button>
+</body>
+<script type="text/javascript">
+
+    var cyclicTimeId;
+    (async function () {
+        await CefSharp.BindObjectAsync("serialPortHelper");
+        await CefSharp.BindObjectAsync("systemHelper");
+
+        var portName = document.getElementById("txtPort").value;
+        var baudRate = parseInt(document.getElementById("txtBaudRate").value);
+        var dataBits = parseInt(document.getElementById("txtDataBits").value);
+        var stopBits = parseInt(document.getElementById("txtStopBits").value);
+        var parity = parseInt(document.getElementById("txtParity").value);
+        await serialPortHelper.init(portName, baudRate, dataBits, stopBits, parity);
+    })();
+
+    function testOpen() {
+        return (async function () {
+            console.log('open');
+
+            await CefSharp.BindObjectAsync("serialPortHelper");
+
+            await serialPortHelper.open();
+        })();
+    }
+
+    function testClose() {
+        console.log('close');
+        (async function () {
+            await CefSharp.BindObjectAsync("serialPortHelper");
+
+            await serialPortHelper.close();
+        })();
+    }
+
+    function sendData() {
+        (async function () {
+            await CefSharp.BindObjectAsync("serialPortHelper");
+
+            var data = await this.buildSendData();
+            console.log('sendData', data);
+            if (data == undefined) return;
+
+            await serialPortHelper.sendData(data);
+        })();
+    }
+
+    function recvData() {
+        (async function () {
+            await CefSharp.BindObjectAsync("serialPortHelper");
+
+            let recvString = await serialPortHelper.recvData();
+            console.log('[' + recvString + ']');
+        })();
+    }
+
+    function startCyclicRecvData() {
+        cyclicRecvData();
+    }
+
+    function stopCyclicRecvData() {
+        clearTimeout(cyclicTimeId);
+    }
+
+    function cyclicRecvData() {
+        (async function () {
+            await CefSharp.BindObjectAsync("serialPortHelper");
+
+            let recvString = await serialPortHelper.recvData();
+            console.log('-' + recvString + '-');
+            if (recvString.trim() == '11') {
+                console.log('ok');
+                await serialPortHelper.sendData('22');
+            }
+
+            cyclicTimeId = setTimeout("cyclicRecvData()", 1000);
+        })();
+    }
+
+    function buildSendData() {
+        return   (async function () {
+            await CefSharp.BindObjectAsync("systemHelper");
+
+            console.log('buildSendData');
+            var count = 1;
+            var seq = 0x01;
+            var byte1 = "55 AA F1  ";
+            byte1 += "00";//数据长度L
+            byte1 += (count * 16 + 1).toString(16).padStart(2, '0');
+            byte1 += seq.toString(16).padStart(2, '0');//帧序号
+            for (var i = 0; i < count; i++) {
+                byte1 += "00 ";
+                byte1 += (i + 1 + (10 * seq)).toString(16).padStart(2, '0');//槽号
+                byte1 += (i + 1 + 1000 + (10 * seq)).toString(16).padStart(2, '0');//钢棒号
+
+
+                //byte1 += "00 11";//温度
+                byte1 += "00";//温度
+                //byte1 += (rd.Next(0, 200)).ToString("X2");
+                byte1 += await systemHelper.buildText("[随机数字,0,200,2]");
+
+                //byte1 += "00 A2";//电压
+                byte1 += "00";//电压
+                //rd = new Random();
+                //byte1 += (rd.Next(0, 150)).ToString("X2");
+                byte1 += await systemHelper.buildText("[随机数字,0,150,2]");
+
+                //byte1 += "00 05";//电量
+                byte1 += "00";//电量
+                //rd = new Random();
+                //byte1 += (rd.Next(0, 80)).ToString("X2");
+                byte1 += await systemHelper.buildText("[随机数字,0,80,2]");
+
+                //DateTime now = DateTime.Now;
+                //byte1 += (now.Year - 2000).ToString("X2");
+                //byte1 += now.Month.ToString("X2");
+                //byte1 += now.Day.ToString("X2");
+                //byte1 += now.Hour.ToString("X2");
+                //byte1 += now.Minute.ToString("X2");
+                //byte1 += now.Second.ToString("X2");
+                var myDate = new Date();
+                byte1 += myDate.getYear().toString(16).padStart(2, '0');        //获取当前年份(2位)
+                byte1 += (myDate.getMonth() + 1).toString(16).padStart(2, '0');  //获取当前月份(0-11,0代表1月)
+                byte1 += myDate.getDate().toString(16).padStart(2, '0');        //获取当前日(1-31)
+                byte1 += myDate.getHours().toString(16).padStart(2, '0');       //获取当前小时数(0-23)
+                byte1 += myDate.getMinutes().toString(16).padStart(2, '0');     //获取当前分钟数(0-59)
+                byte1 += myDate.getSeconds().toString(16).padStart(2, '0');     //获取当前秒数(0-59)
+
+                //if (now.Minute > 30)
+                //    byte1 += (30).ToString("X2");
+                //else
+                //    byte1 += (0).ToString("X2");
+                //byte1 += (0).ToString("X2");
+                //byte1 += " 14 09 16 15 23 24  ";//采集时间
+            }
+            byte1 += "59 00";//CRC
+            byte1 += "CC DD";//
+            //byte1 = "55 AA F1 00 11 00 00 01 10 01 00 01 00 01 00 01 14 09 16 15 23 24 59 00 CC DD ";
+
+            return byte1;
+        })();
+    }
+
+
+</script>
