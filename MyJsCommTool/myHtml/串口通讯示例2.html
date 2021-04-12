@@ -1,5 +1,5 @@
 ﻿<body>
-    <div>串口测试</div>
+    <div>测试示例二</div>
     <input type="text" id="txtPort" value="COM2" /><br />
     波特率:<input type="text" id="txtBaudRate" value="57600" />
     数据位:<input type="text" id="txtDataBits" value="8" />
@@ -7,7 +7,7 @@
     校验位:<input type="text" id="txtParity" value="0" />
     <button onclick="testOpen()">open</button>
     <button onclick="testClose()">close</button>
-    <button onclick="sendData()">发送11</button>
+    <button onclick="sendData()">发送</button>
     <button onclick="recvData()">接收</button>
     <button onclick="startCyclicRecvData()">循环接收</button>
     <button onclick="stopCyclicRecvData()">取消循环接收</button>
@@ -31,8 +31,6 @@
         return (async function () {
             console.log('open');
 
-            await CefSharp.BindObjectAsync("serialPortHelper");
-
             await serialPortHelper.open();
         })();
     }
@@ -40,16 +38,12 @@
     function testClose() {
         console.log('close');
         (async function () {
-            await CefSharp.BindObjectAsync("serialPortHelper");
-
             await serialPortHelper.close();
         })();
     }
 
     function sendData() {
         (async function () {
-            await CefSharp.BindObjectAsync("serialPortHelper");
-
             var data = await this.buildSendData();
             console.log('sendData', data);
             if (data == undefined) return;
@@ -60,8 +54,6 @@
 
     function recvData() {
         (async function () {
-            await CefSharp.BindObjectAsync("serialPortHelper");
-
             let recvString = await serialPortHelper.recvData();
             console.log('[' + recvString + ']');
         })();
@@ -77,7 +69,6 @@
 
     function cyclicRecvData() {
         (async function () {
-            await CefSharp.BindObjectAsync("serialPortHelper");
 
             let recvString = await serialPortHelper.recvData();
             console.log('-' + recvString + '-');
@@ -92,7 +83,6 @@
 
     function buildSendData() {
         return   (async function () {
-            await CefSharp.BindObjectAsync("systemHelper");
 
             console.log('buildSendData');
             var count = 1;

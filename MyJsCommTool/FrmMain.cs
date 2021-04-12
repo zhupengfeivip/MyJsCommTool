@@ -28,10 +28,20 @@ namespace MyJsCommTool
             InitializeChromium();
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         public ChromiumWebBrowser chromeBrowser;
 
+        /// <summary>
+        /// html文件列表
+        /// </summary>
         public List<string> pathList = new List<string>();
+
+        /// <summary>
+        /// 当前打开的html文件路径
+        /// </summary>
+        public string curFilePath = "";
 
         //初始化浏览器并启动
         public void InitializeChromium()
@@ -69,13 +79,14 @@ namespace MyJsCommTool
         {
             try
             {
+                //获取安装目录下myhtml所有的html文件列表
                 DirectoryInfo folder = new DirectoryInfo(Application.StartupPath + "\\myHtml\\");
 
                 foreach (FileInfo file in folder.GetFiles("*.html"))
                 {
                     Debug.WriteLine(file.Name);
-                    tscbxJsList.Items.Add(file.Name);
-                    pathList.Add(file.FullName);
+                    tscbxJsList.Items.Add(file.Name);   //在下拉框中加入文件名
+                    pathList.Add(file.FullName);    //在文件列表中加入全路径，方便加载打开
                 }
 
                 if (tscbxJsList.Items.Count > 0)
@@ -126,10 +137,12 @@ namespace MyJsCommTool
 
         private void tsbtnOpen_Click(object sender, EventArgs e)
         {
-            string fileName = pathList[tscbxJsList.SelectedIndex];
-            chromeBrowser.Load(fileName);
+            curFilePath = pathList[tscbxJsList.SelectedIndex];
+            chromeBrowser.Load(curFilePath);
 
-            textEditorControl1.Text = File.ReadAllText(fileName);
+            textEditorControl1.Text = File.ReadAllText(curFilePath);
+
+            this.Text = $"调试工具[{curFilePath}]";
         }
 
         private void tsmiOpenDevTools_Click(object sender, EventArgs e)
@@ -149,11 +162,9 @@ namespace MyJsCommTool
         {
             try
             {
-                string fileName = pathList[tscbxJsList.SelectedIndex];
+                File.WriteAllText(curFilePath, textEditorControl1.Text);
 
-                File.WriteAllText(fileName, textEditorControl1.Text);
-
-                Debug.WriteLine($"[{fileName}]已保存");
+                Debug.WriteLine($"[{curFilePath}]已保存");
             }
             catch (Exception ex)
             {
@@ -165,10 +176,9 @@ namespace MyJsCommTool
         {
             try
             {
-                string fileName = pathList[tscbxJsList.SelectedIndex];
-                chromeBrowser.Load(fileName);
+                chromeBrowser.Load(curFilePath);
 
-                Debug.WriteLine($"[{fileName}]已刷新");
+                Debug.WriteLine($"[{curFilePath}]已刷新");
             }
             catch (Exception ex)
             {
@@ -182,6 +192,43 @@ namespace MyJsCommTool
             {
                 FrmCreateFile frm = new FrmCreateFile();
                 frm.ShowDialog(this);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        private void tsbtnOpenFromFile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                openFileDialog1.Filter = "网页|*.html|所有文件|*.*";
+                openFileDialog1.RestoreDirectory = true;
+                openFileDialog1.FilterIndex = 1;
+                if (openFileDialog1.ShowDialog(this) != DialogResult.OK)
+                {
+                    MessageBox.Show(this, "操作取消。");
+                    return;
+                }
+
+                FileInfo fileInfo = new FileInfo(this.openFileDialog1.FileName);
+                if (fileInfo.Exists == false)
+                {
+                    MessageBox.Show(this, "文件不存在");
+                    return;
+                }
+
+                int index = tscbxJsList.Items.Add(fileInfo.Name);   //在下拉框中加入文件名
+                pathList.Add(fileInfo.FullName);    //在文件列表中加入全路径，方便加载打开
+                tscbxJsList.SelectedIndex = index;
+
+                curFilePath = fileInfo.FullName;
+                chromeBrowser.Load(curFilePath);
+
+                textEditorControl1.Text = File.ReadAllText(curFilePath);
+
+                this.Text = $"调试工具[{curFilePath}]";
             }
             catch (Exception ex)
             {

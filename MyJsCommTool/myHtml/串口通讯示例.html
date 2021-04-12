@@ -30,8 +30,6 @@
         return (async function () {
             console.log('open');
 
-            await CefSharp.BindObjectAsync("serialPortHelper");
-
             await serialPortHelper.open();
         })();
     }
@@ -39,7 +37,6 @@
     function testClose() {
         console.log('close');
         (async function () {
-            await CefSharp.BindObjectAsync("serialPortHelper");
 
             await serialPortHelper.close();
         })();
@@ -47,7 +44,6 @@
 
     function sendData() {
         (async function () {
-            await CefSharp.BindObjectAsync("serialPortHelper");
 
             await serialPortHelper.sendData("313233");
         })();
@@ -55,7 +51,6 @@
 
     function recvData() {
         (async function () {
-            await CefSharp.BindObjectAsync("serialPortHelper");
 
             let recvString = await serialPortHelper.recvData();
             console.log('[' + recvString + ']');
@@ -72,7 +67,6 @@
 
     function cyclicRecvData() {
         (async function () {
-            await CefSharp.BindObjectAsync("serialPortHelper");
 
             let recvString = await serialPortHelper.recvData();
             console.log('-' + recvString + '-');

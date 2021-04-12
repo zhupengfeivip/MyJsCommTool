@@ -31,7 +31,6 @@
 
     function close() {
         (async function () {
-            await CefSharp.BindObjectAsync("tcpClientHelper");
 
             await tcpClientHelper.close();
         })();
@@ -39,7 +38,6 @@
 
     function sendData() {
         (async function () {
-            await CefSharp.BindObjectAsync("tcpClientHelper");
 
             await tcpClientHelper.sendData("313233");
 
@@ -49,7 +47,6 @@
 
     function recvData() {
         (async function () {
-            await CefSharp.BindObjectAsync("tcpClientHelper");
 
             let recvString = await tcpClientHelper.recvData();
             console.log('[' + recvString+ ']');
