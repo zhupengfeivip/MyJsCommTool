@@ -12,21 +12,44 @@ namespace MyJsCommTool
 {
     class SystemHelper
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public const char functionLeftChar = '(';
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const char functionRightChar = ')';
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const char commentLeftChar = '[';
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const char commentRightChar = ']';
+
         public string buildText(string data)
         {
             string newData = data;
             //去掉空格
             newData = newData.Replace(" ", "");
+            //去掉注释
+            newData = clearAllComment(newData);
+
             do
             {
-                int index = newData.IndexOf("[");
+                int index = newData.IndexOf(functionLeftChar);
                 if (index < 0) break;
 
-                int index2 = newData.IndexOf("]", index);
+                int index2 = newData.IndexOf(functionRightChar, index);
                 string cmdText = newData.Substring(index, index2 - index + 1);
                 Debug.WriteLine(cmdText);
 
-                string cmdParamText = cmdText.TrimStart('[').TrimEnd(']');
+                string cmdParamText = cmdText.TrimStart(functionLeftChar).TrimEnd(functionRightChar);
                 string[] cmdParas = cmdParamText.Split(',');
                 switch (cmdParas[0])
                 {
@@ -83,6 +106,26 @@ namespace MyJsCommTool
                         break;
                 }
 
+            } while (true);
+
+            return newData;
+        }
+
+        public string clearAllComment(string data)
+        {
+            string newData = data;
+            //去掉空格
+            newData = newData.Replace(" ", "");
+            do
+            {
+                int index = newData.IndexOf(commentLeftChar);
+                if (index < 0) break;
+
+                int index2 = newData.IndexOf(commentRightChar, index);
+                string cmdText = newData.Substring(index, index2 - index + 1);
+                Debug.WriteLine(cmdText);
+                //将注释部分替换为空
+                newData = newData.Replace(cmdText, "");
             } while (true);
 
             return newData;

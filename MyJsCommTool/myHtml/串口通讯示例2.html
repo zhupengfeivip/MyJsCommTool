@@ -45,6 +45,7 @@
     function sendData() {
         (async function () {
             var data = await this.buildSendData();
+            data = await systemHelper.buildText(data);
             console.log('sendData', data);
             if (data == undefined) return;
 
@@ -88,7 +89,7 @@
             var count = 1;
             var seq = 0x01;
             var byte1 = "55 AA F1  ";
-            byte1 += "00";//数据长度L
+            byte1 += "[数据长度 1HEX ] 00";//数据长度L
             byte1 += (count * 16 + 1).toString(16).padStart(2, '0');
             byte1 += seq.toString(16).padStart(2, '0');//帧序号
             for (var i = 0; i < count; i++) {
@@ -100,19 +101,19 @@
                 //byte1 += "00 11";//温度
                 byte1 += "00";//温度
                 //byte1 += (rd.Next(0, 200)).ToString("X2");
-                byte1 += await systemHelper.buildText("[随机数字,0,200,2]");
+                byte1 += "(随机数字,0,200,2)";
 
                 //byte1 += "00 A2";//电压
                 byte1 += "00";//电压
                 //rd = new Random();
                 //byte1 += (rd.Next(0, 150)).ToString("X2");
-                byte1 += await systemHelper.buildText("[随机数字,0,150,2]");
+                byte1 += "(随机数字,0,150,2)";
 
                 //byte1 += "00 05";//电量
                 byte1 += "00";//电量
                 //rd = new Random();
                 //byte1 += (rd.Next(0, 80)).ToString("X2");
-                byte1 += await systemHelper.buildText("[随机数字,0,80,2]");
+                byte1 += "(随机数字,0,80,2)";
 
                 //DateTime now = DateTime.Now;
                 //byte1 += (now.Year - 2000).ToString("X2");
