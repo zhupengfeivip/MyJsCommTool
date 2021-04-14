@@ -52,10 +52,20 @@ namespace MyJsCommTool
             this.tsbtnRefresh = new System.Windows.Forms.ToolStripButton();
             this.tsbtnCreateFile = new System.Windows.Forms.ToolStripButton();
             this.tsbtnOpenFromFile = new System.Windows.Forms.ToolStripButton();
+            this.tsbtnSetFont = new System.Windows.Forms.ToolStripButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
-            this.tsbtnSetFont = new System.Windows.Forms.ToolStripButton();
+            this.文件FToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.新建NToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.打开OToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.最近使用过的文件FToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.退出XToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.帮助HToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.查看帮助VToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.关于我们AToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -99,7 +109,9 @@ namespace MyJsCommTool
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.设置ToolStripMenuItem});
+            this.文件FToolStripMenuItem,
+            this.设置ToolStripMenuItem,
+            this.帮助HToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1228, 25);
@@ -118,15 +130,16 @@ namespace MyJsCommTool
             // tsmiOpenDevTools
             // 
             this.tsmiOpenDevTools.Name = "tsmiOpenDevTools";
-            this.tsmiOpenDevTools.Size = new System.Drawing.Size(153, 22);
+            this.tsmiOpenDevTools.Size = new System.Drawing.Size(180, 22);
             this.tsmiOpenDevTools.Text = "打开devTools";
             this.tsmiOpenDevTools.Click += new System.EventHandler(this.tsmiOpenDevTools_Click);
             // 
             // tsmiConfig
             // 
             this.tsmiConfig.Name = "tsmiConfig";
-            this.tsmiConfig.Size = new System.Drawing.Size(153, 22);
+            this.tsmiConfig.Size = new System.Drawing.Size(180, 22);
             this.tsmiConfig.Text = "选项(&O)...";
+            this.tsmiConfig.Click += new System.EventHandler(this.tsmiConfig_Click);
             // 
             // toolStrip1
             // 
@@ -184,6 +197,8 @@ namespace MyJsCommTool
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -288,20 +303,6 @@ namespace MyJsCommTool
             this.tsbtnOpenFromFile.Text = "从文件打开";
             this.tsbtnOpenFromFile.Click += new System.EventHandler(this.tsbtnOpenFromFile_Click);
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(581, 613);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "常用工具";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
             // tsbtnSetFont
             // 
             this.tsbtnSetFont.Image = global::MyJsCommTool.Properties.Resources.Reading_16x16;
@@ -310,6 +311,97 @@ namespace MyJsCommTool
             this.tsbtnSetFont.Size = new System.Drawing.Size(52, 22);
             this.tsbtnSetFont.Text = "字体";
             this.tsbtnSetFont.Click += new System.EventHandler(this.tsbtnSetFont_Click);
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(670, 613);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "常用工具";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // 文件FToolStripMenuItem
+            // 
+            this.文件FToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.新建NToolStripMenuItem,
+            this.打开OToolStripMenuItem,
+            this.最近使用过的文件FToolStripMenuItem,
+            this.退出XToolStripMenuItem});
+            this.文件FToolStripMenuItem.Name = "文件FToolStripMenuItem";
+            this.文件FToolStripMenuItem.Size = new System.Drawing.Size(58, 21);
+            this.文件FToolStripMenuItem.Text = "文件(&F)";
+            // 
+            // 新建NToolStripMenuItem
+            // 
+            this.新建NToolStripMenuItem.Name = "新建NToolStripMenuItem";
+            this.新建NToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.新建NToolStripMenuItem.Text = "新建(&N)";
+            this.新建NToolStripMenuItem.Click += new System.EventHandler(this.新建NToolStripMenuItem_Click);
+            // 
+            // 打开OToolStripMenuItem
+            // 
+            this.打开OToolStripMenuItem.Name = "打开OToolStripMenuItem";
+            this.打开OToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.打开OToolStripMenuItem.Text = "打开(&O)";
+            this.打开OToolStripMenuItem.Click += new System.EventHandler(this.打开OToolStripMenuItem_Click);
+            // 
+            // 最近使用过的文件FToolStripMenuItem
+            // 
+            this.最近使用过的文件FToolStripMenuItem.Name = "最近使用过的文件FToolStripMenuItem";
+            this.最近使用过的文件FToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.最近使用过的文件FToolStripMenuItem.Text = "最近使用过的文件(&F)";
+            // 
+            // 退出XToolStripMenuItem
+            // 
+            this.退出XToolStripMenuItem.Name = "退出XToolStripMenuItem";
+            this.退出XToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.退出XToolStripMenuItem.Text = "退出(&X)";
+            this.退出XToolStripMenuItem.Click += new System.EventHandler(this.退出XToolStripMenuItem_Click);
+            // 
+            // 帮助HToolStripMenuItem
+            // 
+            this.帮助HToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.查看帮助VToolStripMenuItem,
+            this.关于我们AToolStripMenuItem});
+            this.帮助HToolStripMenuItem.Name = "帮助HToolStripMenuItem";
+            this.帮助HToolStripMenuItem.Size = new System.Drawing.Size(61, 21);
+            this.帮助HToolStripMenuItem.Text = "帮助(&H)";
+            // 
+            // 查看帮助VToolStripMenuItem
+            // 
+            this.查看帮助VToolStripMenuItem.Name = "查看帮助VToolStripMenuItem";
+            this.查看帮助VToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.查看帮助VToolStripMenuItem.Text = "查看帮助(&V)";
+            this.查看帮助VToolStripMenuItem.Click += new System.EventHandler(this.查看帮助VToolStripMenuItem_Click);
+            // 
+            // 关于我们AToolStripMenuItem
+            // 
+            this.关于我们AToolStripMenuItem.Name = "关于我们AToolStripMenuItem";
+            this.关于我们AToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.关于我们AToolStripMenuItem.Text = "关于我们(&A)";
+            this.关于我们AToolStripMenuItem.Click += new System.EventHandler(this.关于我们AToolStripMenuItem_Click);
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(670, 613);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "API说明";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(670, 613);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "帮助文档";
+            this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // FrmMain
             // 
@@ -379,5 +471,15 @@ namespace MyJsCommTool
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.FontDialog fontDialog1;
         private System.Windows.Forms.ToolStripButton tsbtnSetFont;
+        private System.Windows.Forms.ToolStripMenuItem 文件FToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 新建NToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 打开OToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 最近使用过的文件FToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 退出XToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 帮助HToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 查看帮助VToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 关于我们AToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPage4;
     }
 }

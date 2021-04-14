@@ -23,7 +23,6 @@ namespace MyJsCommTool
             InitializeComponent();
 
 
-
             // Start the browser after initialize global component
             InitializeChromium();
         }
@@ -112,11 +111,22 @@ namespace MyJsCommTool
                 textEditorControl1.Font = new Font("Courier New", 9);
 
                 this.toolStrip1.Visible = false;//暂时没按钮，先隐藏
-                //tsbtnOpen.PerformClick();
+
+                ChromiumWebBrowser chromeApi = new ChromiumWebBrowser();
+                // Add it to the form and fill it to the form window.
+                this.tabPage3.Controls.Add(chromeApi);
+                chromeApi.Dock = DockStyle.Fill;
+                chromeApi.Load("https://www.yuque.com/docs/share/9f9449b6-3d06-41f8-91f8-1c55603ff8d0?#%20《api》");
+
+                ChromiumWebBrowser chromeHelp = new ChromiumWebBrowser();
+                // Add it to the form and fill it to the form window.
+                this.tabPage4.Controls.Add(chromeHelp);
+                chromeHelp.Dock = DockStyle.Fill;
+                chromeHelp.Load("https://www.yuque.com/docs/share/69677507-e60b-43f2-b008-2a07e03959d4?#%20《概述》");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this,ex.Message,"出错啦",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show(this, ex.Message, "出错啦", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -137,9 +147,6 @@ namespace MyJsCommTool
         {
             TextBoxTraceListener tbtl = new TextBoxTraceListener(this.rtbxLog);
             Debug.Listeners.Add(tbtl);
-            //Trace.Listeners.Add(tbtl);
-
-            //Debug.WriteLine("Testing Testing 123");
         }
 
         private void tsbtnOpen_Click(object sender, EventArgs e)
@@ -270,6 +277,36 @@ namespace MyJsCommTool
             {
                 tsbtnSave.PerformClick();
             }
+        }
+
+        private void 新建NToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tsbtnCreateFile.PerformClick();
+        }
+
+        private void 打开OToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tsbtnOpenFromFile.PerformClick();
+        }
+
+        private void 退出XToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void 查看帮助VToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void 关于我们AToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tsmiConfig_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
