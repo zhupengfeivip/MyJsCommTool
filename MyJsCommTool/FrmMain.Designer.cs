@@ -51,9 +51,11 @@ namespace MyJsCommTool
             this.tsbtnSave = new System.Windows.Forms.ToolStripButton();
             this.tsbtnRefresh = new System.Windows.Forms.ToolStripButton();
             this.tsbtnCreateFile = new System.Windows.Forms.ToolStripButton();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tsbtnOpenFromFile = new System.Windows.Forms.ToolStripButton();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.fontDialog1 = new System.Windows.Forms.FontDialog();
+            this.tsbtnSetFont = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -75,7 +77,7 @@ namespace MyJsCommTool
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(476, 305);
+            this.panel1.Size = new System.Drawing.Size(546, 305);
             this.panel1.TabIndex = 5;
             // 
             // statusStrip1
@@ -84,7 +86,7 @@ namespace MyJsCommTool
             this.toolStripStatusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 689);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1069, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1228, 22);
             this.statusStrip1.TabIndex = 8;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -100,7 +102,7 @@ namespace MyJsCommTool
             this.设置ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1069, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(1228, 25);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -130,7 +132,7 @@ namespace MyJsCommTool
             // 
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1069, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1228, 25);
             this.toolStrip1.TabIndex = 10;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -148,7 +150,7 @@ namespace MyJsCommTool
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.rtbxLog);
-            this.splitContainer1.Size = new System.Drawing.Size(476, 639);
+            this.splitContainer1.Size = new System.Drawing.Size(546, 639);
             this.splitContainer1.SplitterDistance = 305;
             this.splitContainer1.TabIndex = 11;
             // 
@@ -157,7 +159,7 @@ namespace MyJsCommTool
             this.rtbxLog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbxLog.Location = new System.Drawing.Point(0, 0);
             this.rtbxLog.Name = "rtbxLog";
-            this.rtbxLog.Size = new System.Drawing.Size(476, 330);
+            this.rtbxLog.Size = new System.Drawing.Size(546, 330);
             this.rtbxLog.TabIndex = 0;
             this.rtbxLog.Text = "";
             // 
@@ -174,8 +176,8 @@ namespace MyJsCommTool
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer2.Size = new System.Drawing.Size(1069, 639);
-            this.splitContainer2.SplitterDistance = 476;
+            this.splitContainer2.Size = new System.Drawing.Size(1228, 639);
+            this.splitContainer2.SplitterDistance = 546;
             this.splitContainer2.TabIndex = 12;
             // 
             // tabControl1
@@ -186,7 +188,7 @@ namespace MyJsCommTool
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(589, 639);
+            this.tabControl1.Size = new System.Drawing.Size(678, 639);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -196,7 +198,7 @@ namespace MyJsCommTool
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(581, 613);
+            this.tabPage1.Size = new System.Drawing.Size(670, 613);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "脚本编写";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -207,7 +209,7 @@ namespace MyJsCommTool
             this.textEditorControl1.IsReadOnly = false;
             this.textEditorControl1.Location = new System.Drawing.Point(3, 32);
             this.textEditorControl1.Name = "textEditorControl1";
-            this.textEditorControl1.Size = new System.Drawing.Size(575, 578);
+            this.textEditorControl1.Size = new System.Drawing.Size(664, 578);
             this.textEditorControl1.TabIndex = 1;
             // 
             // panel2
@@ -216,7 +218,7 @@ namespace MyJsCommTool
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(575, 29);
+            this.panel2.Size = new System.Drawing.Size(664, 29);
             this.panel2.TabIndex = 0;
             // 
             // toolStrip2
@@ -227,10 +229,11 @@ namespace MyJsCommTool
             this.tsbtnSave,
             this.tsbtnRefresh,
             this.tsbtnCreateFile,
-            this.tsbtnOpenFromFile});
+            this.tsbtnOpenFromFile,
+            this.tsbtnSetFont});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(575, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(664, 25);
             this.toolStrip2.TabIndex = 11;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -276,6 +279,15 @@ namespace MyJsCommTool
             this.tsbtnCreateFile.Text = "新建";
             this.tsbtnCreateFile.Click += new System.EventHandler(this.tsbtnCreateFile_Click);
             // 
+            // tsbtnOpenFromFile
+            // 
+            this.tsbtnOpenFromFile.Image = global::MyJsCommTool.Properties.Resources.Reading_16x16;
+            this.tsbtnOpenFromFile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnOpenFromFile.Name = "tsbtnOpenFromFile";
+            this.tsbtnOpenFromFile.Size = new System.Drawing.Size(88, 22);
+            this.tsbtnOpenFromFile.Text = "从文件打开";
+            this.tsbtnOpenFromFile.Click += new System.EventHandler(this.tsbtnOpenFromFile_Click);
+            // 
             // tabPage2
             // 
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -286,35 +298,37 @@ namespace MyJsCommTool
             this.tabPage2.Text = "常用工具";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // tsbtnOpenFromFile
-            // 
-            this.tsbtnOpenFromFile.Image = global::MyJsCommTool.Properties.Resources.Reading_16x16;
-            this.tsbtnOpenFromFile.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbtnOpenFromFile.Name = "tsbtnOpenFromFile";
-            this.tsbtnOpenFromFile.Size = new System.Drawing.Size(88, 22);
-            this.tsbtnOpenFromFile.Text = "从文件打开";
-            this.tsbtnOpenFromFile.Click += new System.EventHandler(this.tsbtnOpenFromFile_Click);
-            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // tsbtnSetFont
+            // 
+            this.tsbtnSetFont.Image = global::MyJsCommTool.Properties.Resources.Reading_16x16;
+            this.tsbtnSetFont.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnSetFont.Name = "tsbtnSetFont";
+            this.tsbtnSetFont.Size = new System.Drawing.Size(52, 22);
+            this.tsbtnSetFont.Text = "字体";
+            this.tsbtnSetFont.Click += new System.EventHandler(this.tsbtnSetFont_Click);
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1069, 711);
+            this.ClientSize = new System.Drawing.Size(1228, 711);
             this.Controls.Add(this.splitContainer2);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FrmMain";
             this.Text = "通讯工具[串口TCP，自己写html，想怎么发怎么发]";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.Load += new System.EventHandler(this.FrmMain_Load);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FrmMain_KeyUp);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -363,5 +377,7 @@ namespace MyJsCommTool
         private System.Windows.Forms.ToolStripButton tsbtnCreateFile;
         private System.Windows.Forms.ToolStripButton tsbtnOpenFromFile;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.FontDialog fontDialog1;
+        private System.Windows.Forms.ToolStripButton tsbtnSetFont;
     }
 }

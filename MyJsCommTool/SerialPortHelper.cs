@@ -23,13 +23,20 @@ namespace MyJsCommTool
         /// <param name="parity"></param>
         public void init(string portName = "COM1", int baudRate = 57600, int dataBits = 8, int stopBits = 1, int parity = 0)
         {
-            com.PortName = portName;  //端口名称，默认COM1
-            com.BaudRate = baudRate;
-            com.DataBits = dataBits;
-            com.StopBits = (System.IO.Ports.StopBits)stopBits;
-            com.Parity = (System.IO.Ports.Parity)parity;
+            try
+            {
+                com.PortName = portName;  //端口名称，默认COM1
+                com.BaudRate = baudRate;
+                com.DataBits = dataBits;
+                com.StopBits = (System.IO.Ports.StopBits)stopBits;
+                com.Parity = (System.IO.Ports.Parity)parity;
 
-            Debug.WriteLine($"init data port:{portName} baudRate:{baudRate} dataBits:{dataBits} stopBits:{stopBits} parity:{parity}");
+                Debug.WriteLine($"init data port:{portName} baudRate:{baudRate} dataBits:{dataBits} stopBits:{stopBits} parity:{parity}");
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
         }
 
         /// <summary>
@@ -44,7 +51,7 @@ namespace MyJsCommTool
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Open串口时发生异常," + ex);
+                Debug.WriteLine($"Open串口时发生异常," + ex.Message);
             }
         }
 
@@ -60,7 +67,7 @@ namespace MyJsCommTool
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Close串口时发生异常," + ex);
+                Debug.WriteLine($"Close串口时发生异常," + ex.Message);
             }
 
         }

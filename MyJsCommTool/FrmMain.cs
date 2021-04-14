@@ -109,21 +109,28 @@ namespace MyJsCommTool
                 //textEditorControl1.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy(Application.StartupPath + "//highlighting//JavaScript.xshd");
                 textEditorControl1.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("HTML");
                 textEditorControl1.Encoding = Encoding.GetEncoding("GB2312");
-
+                textEditorControl1.Font = new Font("Courier New", 9);
 
                 this.toolStrip1.Visible = false;//暂时没按钮，先隐藏
                 //tsbtnOpen.PerformClick();
             }
             catch (Exception ex)
             {
-                throw;
+                MessageBox.Show(this,ex.Message,"出错啦",MessageBoxButtons.OK,MessageBoxIcon.Error);
             }
         }
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //窗体关闭时，记得停止浏览器
-            Cef.Shutdown();
+            try
+            {
+                //窗体关闭时，记得停止浏览器
+                Cef.Shutdown();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "出错啦", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         protected override void OnHandleCreated(EventArgs e)
@@ -162,13 +169,20 @@ namespace MyJsCommTool
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(curFilePath))
+                {
+                    Debug.WriteLine($"请先打开文件再保存");
+                    return;
+                }
                 File.WriteAllText(curFilePath, textEditorControl1.Text);
 
                 Debug.WriteLine($"[{curFilePath}]已保存");
+
+                tsbtnRefresh.PerformClick();
             }
             catch (Exception ex)
             {
-                throw;
+                MessageBox.Show(this, ex.Message, "出错啦", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -182,7 +196,7 @@ namespace MyJsCommTool
             }
             catch (Exception ex)
             {
-                throw;
+                MessageBox.Show(this, ex.Message, "出错啦", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -195,7 +209,7 @@ namespace MyJsCommTool
             }
             catch (Exception ex)
             {
-                throw;
+                MessageBox.Show(this, ex.Message, "出错啦", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -232,7 +246,29 @@ namespace MyJsCommTool
             }
             catch (Exception ex)
             {
-                throw;
+                MessageBox.Show(this, ex.Message, "出错啦", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void tsbtnSetFont_Click(object sender, EventArgs e)
+        {
+            fontDialog1.Font = textEditorControl1.Font;
+            fontDialog1.ShowColor = false;
+            fontDialog1.ShowDialog();//此方法用于弹出字体对话框
+
+            textEditorControl1.Font = fontDialog1.Font;
+        }
+
+        private void FrmMain_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F12)
+            {
+                tsmiOpenDevTools.PerformClick();
+
+            }
+            else if (e.Control && e.KeyCode == Keys.S)
+            {
+                tsbtnSave.PerformClick();
             }
         }
     }
